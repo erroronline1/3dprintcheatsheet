@@ -87,10 +87,7 @@ software:
 * you have to live with bad bottom layers on rafts and support
 * remember the technical boundaries of fdm prints - speed, resolution, anisotrophy
 * be aware you most likely have a low budget machine - don't expect miracles 
-* sometimes it's just the filament being shit
-
-<video src='./assets/filaments.mp4' width=360/>
-(all printed with identical settings consecutively)
+* sometimes it's just the filament being shit - ![filaments](./assets/filaments.mp4) all printed with identical settings consecutively
 
 </details>
 
