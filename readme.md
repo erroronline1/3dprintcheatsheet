@@ -87,7 +87,24 @@ software:
 * you have to live with bad bottom layers on rafts and support
 * remember the technical boundaries of fdm prints - speed, resolution, anisotrophy
 * be aware you most likely have a low budget machine - don't expect miracles 
-* sometimes it's just the filament being shit - ![filaments](./assets/filaments.mp4) all printed with identical settings consecutively
+
+</details>
+
+<details><summary>solved issues so far</summary>
+
+### filament sensor false alert
+at least on an anycubic mega you can just unplug it. no more false alerts. yes, you regain the risk of running out of filament midprint.
+
+### sudden decrease in layer consistency
+sometimes it's just the filament being shit - ![filaments](./assets/filaments.mp4) all printed with identical settings consecutively
+
+### sd card can not be read
+small plastic parts broke off and clogged the card reader. cleaned and used another card
+
+### rattling noises on on of the z-axis stepper motors
+connection issue. for some reason the cable connector had other plans. pushed everything together
+
+![stepper cable connection](./assets/steppercable.png) 
 
 </details>
 
