@@ -83,11 +83,13 @@ software:
 * slicer profiles should have some version control, too much meddling can make things worse
 * belts can be too tight
 * bowden extruders need more retract that direct extruders
+* stepper motors have magic numbers, often a multiple of 0.04mm for layer heights
 
 </details>
 
 <details><summary>relax</summary>
 
+* [troubleshooting guide](https://www.simplify3d.com/support/print-quality-troubleshooting/)
 * expensive dry boxes may be overrated (for pla) [source](https://www.youtube.com/watch?v=5CFxT1q6dX8)
 * be patient - lower speeds reward with better quality
 * you have to live with bad bottom layers on rafts and support
