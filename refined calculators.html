@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<meta charset="UTF-8">
+	<title>refined calibration calculators</title>
+</head>
+
+<style>
+	* {font-family: 'Courier New', Courier, monospace;}
+	input {margin:.25em; width:20em;}
+	input[use=meanfilament],input[use=meanflow] {
+		display: block;
+	}
+	h2{user-select: none;}
+	article {height:4em; overflow:hidden;}
+	article.extend{height:auto}
+</style>
+<script>
+	const el = id => {
+		return document.getElementById(id)
+	};
+	const round = (number, decimals = 2) => {
+		return Number(Math.round(number + "e" + decimals) + "e-" + decimals)
+	};
+	const calc = {
+		esteps: () => {
+			let currentsteps = Number(el('esteps_current').value.replace(',', '.')),
+				requested = Number(el('esteps_requested').value.replace(',', '.')),
+				measured = Number(el('esteps_measured').value.replace(',', '.'));
+			if (requested && measured && currentsteps) el('esteps_result').value = round(requested /
+				measured *
+				currentsteps);
+			return false;
+		},
+		meandiameter: () => {
+			const inputs = document.querySelectorAll('[use="meanfilament"]');
+			let diameters = [];
+			for (let i = 0; i < inputs.length; i++) {
+				let value = Number(inputs[i].value.replace(',', '.'));
+				if (value) diameters.push(value)
+			}
+			if (diameters.length) el('meanfilament_result').value = round(diameters.reduce((a, b) => {
+				return +a + +b
+			}) / diameters.length);
+		},
+		flowrate: () => {
+			const inputs = document.querySelectorAll('[use="meanflow"]');
+			let walls = [];
+			for (let i = 0; i < inputs.length; i++) {
+				let value = Number(inputs[i].value.replace(',', '.'));
+				if (value) walls.push(value)
+			}
+
+			const should=Number(el('flowrate_wallcount').value)*Number(el('flowrate_extrusionwidth').value.replace(',','.')),
+			flowrate=Number(el('flowrate_currentflow').value.replace(',','.'));
+
+			if (walls.length) el('meanflow_result').value = round(flowrate* (should / (walls.reduce((a, b) => {
+				return +a + +b
+			}) / walls.length)), 4);
+		},
+	};
+	const input = {
+		add: (where, use, event) => {
+			const destination = el(where);
+			let element = document.createElement('input');
+			element.setAttribute('use', use);
+			element.setAttribute('type', 'text');
+			element.onchange = event;
+			destination.appendChild(element);
+		},
+		clear: (where, use) => {
+			const inputs = document.querySelectorAll('[use="' + use + '"]');
+			for (let i = 0; i < inputs.length; i++) {
+				el(where).removeChild(inputs[i]);
+			}
+		}
+	};
+</script>
+<body>
+
+	<article>
+		<h2>calibrate e-steps +</h2>
+		for use with e.g. pronterface<br />
+		<a href="https://3dprintbeginner.com/extruder-calibration-guide/">detailed</a><br />
+		<ol>
+			<li>M503 <i>to read</i>, current e-steps: <input type="text" id="esteps_current"
+					placeholder="M92 Xxxx Yxxx Zxxx E{thisnumber}" onchange="calc.esteps()" /></li>
+			<li>M83 <i>for relative mode</i></li>
+			<li>G1 F100 E{mm to extrude}: <input type="text" id="esteps_requested" placeholder="{this number}"
+					onchange="calc.esteps()" /></li>
+			<li>actual measured: <input type="text" id="esteps_measured" placeholder="in mm" onchange="calc.esteps()" />
+			</li>
+			<li>M92 E{this number} <i>to write</i>: <input type="text" id="esteps_result" readonly /></li>
+			<li>M500 <i>to save</i></li>
+		</ol>
+	</article>
+
+	<article>
+		<h2>mean filament diameter +</h2>
+		a few measurements with at least 10cm distance<br />
+		<a href="https://3dprintbeginner.com/flow-rate-calibration/">detailed</a><br /><br />
+		<div id="meanfilament">
+		</div>
+		<input type="button" value="add measurement"
+			onclick="input.add('meanfilament', 'meanfilament',calc.meandiameter)" /><br />
+		mean diameter: <input type="text" id="meanfilament_result" readonly /><br />
+		<input type="button" value="reset" onclick="input.clear('meanfilament', 'meanfilament')" /><br />
+	</article>
+
+	<article>
+		<h2>flow rate +</h2>
+		at least 4 walls from a calibration cube with two walls and no top layer or infill<br />
+		<a href="https://3dprintbeginner.com/flow-rate-calibration/">detailed</a><br /><br />
+		<div id="meanflow">
+			current flow rate: <input type="text" id="flowrate_currentflow" value="1" /><br />
+			extrusion width: <input type="text" id="flowrate_extrusionwidth" value="0.5" /><br />
+			wall count: <input type="number" id="flowrate_wallcount" value="2" />
+		</div>
+		<input type="button" value="add wall measurement" onclick="input.add('meanflow', 'meanflow', calc.flowrate)" /><br />
+		mean flow rate: <input type="text" id="meanflow_result" readonly/><br />
+		<input type="button" value="reset" onclick="input.clear('meanflow', 'meanflow')" /><br />
+	</article>
+
+<script>
+const articles=document.getElementsByTagName('h2');
+for (let i=0;i<articles.length;i++){
+	articles[i].addEventListener('click', (el)=>{el.target.parentNode.classList.toggle('extend')});
+	}
+</script>
+
+</body>
+</html>

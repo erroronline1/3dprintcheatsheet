@@ -7,6 +7,12 @@
 * tighten screws
 * [calibrate e-steps and temperature](https://3dprintbeginner.com/extruder-calibration-guide/)
 * [level bed](https://all3dp.com/2/3d-printer-bed-leveling-step-by-step-tutorial/)
+* find a slicer you're comfortable with. one slicer might be more suitable for particularly your machine than another (cura for mine as opposed to prusa) - at least out of the box, as it might be totally possible that settings can be adapted 
+
+![standard profiles, same temperature, speed and filament](./assets/slicerpresets.png)
+
+
+use the [refined calibration calculators](refined%20calculators.html), <s>stolen</s> refined from other sites.
 
 </details>
 
@@ -44,7 +50,7 @@ slicer settings:
 * walls from inside to outside to enhance connection especially on overhangs and concave curves
 * infill with cubic subdivision - quick and stable at lower infill rate
 * disable z-hop to enhance precision and spare z-axis mechanics
-* enabled combing (relevant cut print time!)
+* enabled combing (relevant cut in print time!)
 * reduce first layer dimension to avoid elephants foot
 
 </details>
@@ -54,11 +60,11 @@ slicer settings:
 successful upgrades:
 * mosfets for hotend and heatbed
 * led illumination to examine quality during runtime
-* cable chains
-* bed holder
+* cable chains ([support](https://www.thingiverse.com/thing:4335239))
+* [bed holder](https://www.thingiverse.com/thing:3573378) 
 * screw direction reminder for bed levelling
 * a marvellous faceplate
-* bowden clips
+* [bowden clips](https://www.thingiverse.com/thing:936611)
 
 unsuccessful upgrades:
 * heat bed insulation - confusing the thermistor
@@ -86,11 +92,14 @@ software:
 * be patient - lower speeds reward with better quality
 * you have to live with bad bottom layers on rafts and support
 * remember the technical boundaries of fdm prints - speed, resolution, anisotrophy
-* be aware you most likely have a low budget machine - don't expect miracles 
+* be aware you most likely have a low budget machine - don't expect miracles
 
 </details>
 
 <details><summary>solved issues so far</summary>
+
+### ringing noise on x-axis movement
+loose x-stop case. superglue for peace of mind
 
 ### filament sensor false alert
 at least on an anycubic mega you can just unplug it. no more false alerts. yes, you regain the risk of running out of filament midprint.
@@ -101,8 +110,8 @@ sometimes it's just the filament being shit - ![filaments](./assets/filaments.mp
 ### sd card can not be read
 small plastic parts broke off and clogged the card reader. cleaned and used another card
 
-### rattling noises on on of the z-axis stepper motors
-connection issue. for some reason the cable connector had other plans. pushed everything together
+### sudden rattling noises on one of the z-axis stepper motors, x-tilt, prints failing
+connection issue. for some reason the cable connector had other plans. pushed everything back together. it's not always a broken motor or driver.
 
 ![stepper cable connection](./assets/steppercable.png) 
 
