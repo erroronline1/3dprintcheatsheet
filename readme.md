@@ -84,6 +84,7 @@ software:
 * belts can be too tight
 * bowden extruders need more retract that direct extruders
 * stepper motors have magic numbers, often a multiple of 0.04mm for layer heights
+* unless you successfully installed a fan duct with an even flow, the direction of the model on the buildplate impacts the quality of the cooling effect and therefore layer quality and sometimes horizontal warping of thin structures
 
 </details>
 
