@@ -11,7 +11,8 @@
 		font-family: 'Courier New', Courier, monospace;
 	}
 
-	input {
+	input[type=number],
+	input[type=text] {
 		margin: .25em;
 		width: 20em;
 	}
@@ -117,7 +118,7 @@
 
 	<article>
 		<h2>calibrate e-steps +</h2>
-		for use with e.g. pronterface<br />
+		for use with marlin and e.g. pronterface<br />
 		<a href="https://3dprintbeginner.com/extruder-calibration-guide/" target="source">detailed</a><br />
 		<ol>
 			<li>M503 <i>to read</i>, current e-steps: <input type="text" id="esteps_current"
@@ -161,12 +162,27 @@
 
 	<article>
 		<h2>optimal layer heights +</h2>
-		<a href="https://3dprinterly.com/3d-printer-magic-numbers-getting-the-best-quality-prints/" target="source">detailed</a><br /><br />
+		<a href="https://3dprinterly.com/3d-printer-magic-numbers-getting-the-best-quality-prints/"
+			target="source">detailed</a><br /><br />
 		magic number: <input type="text" id="layerheight_magicnumber" value="0.04"
 			onchange="calc.layerheight()" /><br />
 		nozzle size: <input type="text" id="layerheight_nozzle" value="0.4" onchange="calc.layerheight()" /><br />
 		<select id="layerheights" size="8">
 		</select>
+	</article>
+
+	<article>
+		<h2>regular checklist +</h2>
+		<label><input type="checkbox"> bed levelled</label><br />
+		<label><input type="checkbox"> screws and bowden tube stable</label><br />
+		<label><input type="checkbox"> belts springy</label><br />
+		<label><input type="checkbox"> bed cleaned</label><br />
+		<label><input type="checkbox"> determined flow set in slicer</label><br />
+		<label><input type="checkbox"> model direction / details match fan duct</label><br />
+
+		<br /><a href="https://www.simplify3d.com/support/print-quality-troubleshooting/"
+			target=_blank">troubleshooting</a>
+
 	</article>
 
 	<script>
