@@ -35,7 +35,7 @@ use the [refined calibration calculators](refined%20calculators.html), <s>stolen
 
 * [calicat](https://www.thingiverse.com/thing:1545913/files)
 * [xyz cube](https://www.thingiverse.com/thing:1278865)
-* [20mm test cube](https://www.thingiverse.com/thing:38108) without top and bottom, only one wall to check flow
+* [20mm test cube](https://www.thingiverse.com/thing:38108) without top and bottom, only one or two walls to check flow
 * [bed level test](https://www.thingiverse.com/thing:34558)
 * [temp tower](https://www.thingiverse.com/thing:2729076)
 
