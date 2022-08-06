@@ -18,7 +18,8 @@
 	}
 
 	input[use=meanfilament],
-	input[use=meanflow] {
+	input[use=meanflow],
+	label {
 		display: block;
 	}
 
@@ -95,6 +96,104 @@
 				}
 			}
 		},
+		settings: (init = false) => {
+			const setting = {
+				//settings may have a positive impact on given items but can affect others
+				//continue list, display will be generated
+				"linewidth > nozzle size": {
+					improves: ["strength", "speed", "vase"],
+					affects: ["details","overhangs"]
+				},
+				"linewidth = nozzle size": {
+					improves: ["details", "overhangs"],
+					affects: ["speed","vase","strength"]
+				},
+				"layerheight <= 0.5 nozzle size": {
+					improves: ["details", "strength"],
+					affects: ["speed"]
+				},
+				"layerheight > 0.5 nozzle size": {
+					improves: ["speed"],
+					affects: ["details","strength"]
+				},
+				"best temp": {
+					improves: ["details", "overhangs"],
+					affects: ["strength"]
+				},
+				"best temp +5°": {
+					improves: ["strength"],
+					affects: ["details","overhangs"]
+				},
+				"wall ordering outside to inside": {
+					improves: ["details"],
+					affects: ["overhangs"]
+				},
+				"wall ordering inside to outside": {
+					improves: ["overhangs"],
+					affects: ["details"]
+				},
+				"> 3 walls": {
+					improves: ["strength", "overhangs", "details"],
+					affects: ["speed"]
+				},
+				"< 3 walls": {
+					improves: ["speed"],
+					affects: ["strength","overhangs","details"]
+				},
+				"> 15% infill": {
+					improves: ["strength", "details"],
+					affects: ["speed"]
+				},
+				"< 15% infill": {
+					improves: ["speed"],
+					affects: ["strength","details"]
+				},
+			};
+			if (init) {
+				let options = [];
+				Object.keys(setting).forEach(s => {
+					options = [...new Set([...options, ...setting[s].improves])];
+				});
+				options.forEach(o => {
+					let label = document.createElement('label');
+					let input = document.createElement('input');
+					input.setAttribute('type', 'checkbox');
+					input.setAttribute('use', 'settings');
+					input.setAttribute('value', o);
+					input.setAttribute('onchange', 'calc.settings()');
+					label.appendChild(input);
+					label.appendChild(document.createTextNode(o));
+					el('requirements').appendChild(label);
+				});
+				return;
+			}
+			let selected = [],
+				recommend = [],
+				result = "<br />",
+				affects;
+			//get selections
+			const selection = document.querySelectorAll('[use="settings"]');
+			for (let i = 0; i < selection.length; i++) {
+				if (selection[i].checked) selected.push(selection[i].value);
+			}
+			//refine recommendations
+			selected.forEach(o => {
+				Object.keys(setting).forEach(s => {
+					if (setting[s].improves.includes(o) && !recommend.includes(s)) recommend.push(s);
+				})
+			});
+			// create output and warn about possible collisions
+			recommend.forEach(r => {
+				result += r;
+				affects = "";
+				selected.forEach(o => {
+					if (setting[r].affects.includes(o)) affects += ", " + o;
+				})
+				if (affects.length) result += "<i> possibly affects" + affects.substring(1) + "</i>";
+				result += '<br />';
+			})
+			el('recommendations').innerHTML = result;
+		},
 	};
 	const input = {
 		add: (where, use, event) => {
@@ -115,7 +214,6 @@
 </script>
 
 <body>
-
 	<article>
 		<h2>calibrate e-steps +</h2>
 		for use with marlin and e.g. pronterface<br />
@@ -142,7 +240,7 @@
 		<input type="button" value="add measurement"
 			onclick="input.add('meanfilament', 'meanfilament',calc.meandiameter)" /><br />
 		mean diameter: <input type="text" id="meanfilament_result" readonly /><br />
-		<input type="button" value="reset" onclick="input.clear('meanfilament', 'meanfilament')" /><br />
+		<input type="button" value="reset" onclick="input.clear('meanfilament', 'meanfilament')" />
 	</article>
 
 	<article>
@@ -157,7 +255,7 @@
 		<input type="button" value="add wall measurement"
 			onclick="input.add('meanflow', 'meanflow', calc.flowrate)" /><br />
 		mean flow rate: <input type="text" id="meanflow_result" readonly /><br />
-		<input type="button" value="reset" onclick="input.clear('meanflow', 'meanflow')" /><br />
+		<input type="button" value="reset" onclick="input.clear('meanflow', 'meanflow')" />
 	</article>
 
 	<article>
@@ -173,16 +271,20 @@
 
 	<article>
 		<h2>regular checklist +</h2>
-		<label><input type="checkbox"> bed levelled</label><br />
-		<label><input type="checkbox"> screws and bowden tube stable</label><br />
-		<label><input type="checkbox"> belts springy</label><br />
-		<label><input type="checkbox"> bed cleaned</label><br />
-		<label><input type="checkbox"> determined flow set in slicer</label><br />
-		<label><input type="checkbox"> model direction / details match fan duct</label><br />
-
+		<label><input type="checkbox"> bed levelled</label>
+		<label><input type="checkbox"> screws and bowden tube stable</label>
+		<label><input type="checkbox"> belts springy</label>
+		<label><input type="checkbox"> bed cleaned</label>
+		<label><input type="checkbox"> determined flow set in slicer</label>
+		<label><input type="checkbox"> model direction / details match fan duct</label>
 		<br /><a href="https://www.simplify3d.com/support/print-quality-troubleshooting/"
 			target=_blank">troubleshooting</a>
+	</article>
 
+	<article>
+		<h2>slicing impacts +</h2>
+		<div id="requirements"></div>
+		<div id="recommendations"></div>
 	</article>
 
 	<script>
@@ -193,6 +295,7 @@
 			});
 		}
 		calc.layerheight();
+		calc.settings('init');
 	</script>
 
 </body>
