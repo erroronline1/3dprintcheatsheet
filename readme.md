@@ -68,7 +68,7 @@ successful upgrades:
 
 unsuccessful upgrades:
 * heat bed insulation - confusing the thermistor
-* any printed fan duct - may need further investigations
+* any printed fan duct - tested multiple types and times, worse cooling on overhangs and fine edges as opposed to stock fan duct on [temp tower](https://www.thingiverse.com/thing:2729076) ![fan duct failure](./assets/fanductfailure.png)
 
 software:
 * newer slicer versions might make use of commands older printer firmwares are not able to compute
