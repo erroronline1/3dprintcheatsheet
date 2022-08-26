@@ -7,7 +7,8 @@
 * tighten screws
 * [calibrate e-steps and temperature](https://3dprintbeginner.com/extruder-calibration-guide/)
 * [level bed](https://all3dp.com/2/3d-printer-bed-leveling-step-by-step-tutorial/)
-* find a slicer you're comfortable with. one slicer might be more suitable for particularly your machine than another (cura for mine as opposed to prusa) - at least out of the box, as it might be totally possible that settings can be adapted 
+* find a slicer you're comfortable with. one slicer might be more suitable for particularly your machine than another (cura for mine as opposed to prusa) - at least out of the box, as it might be totally possible that settings can be adapted
+* [calibrate other settings](https://teachingtechyt.github.io/calibration.html) (flow, retract, etc.)
 
 ![standard profiles, same temperature, speed and filament](./assets/slicerpresets.png)
 
