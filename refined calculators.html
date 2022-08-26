@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>refined calibration calculators</title>
+	<meta name="author" content="error on line 1 (erroronline.one)">
 </head>
 
 <style>
@@ -102,11 +103,11 @@
 				//continue list, display will be generated
 				"linewidth > nozzle size": {
 					improves: ["strength", "speed", "vase"],
-					affects: ["details","overhangs"]
+					affects: ["details", "overhangs"]
 				},
 				"linewidth = nozzle size": {
 					improves: ["details", "overhangs"],
-					affects: ["speed","vase","strength"]
+					affects: ["speed", "vase", "strength"]
 				},
 				"layerheight <= 0.5 nozzle size": {
 					improves: ["details", "strength"],
@@ -114,7 +115,7 @@
 				},
 				"layerheight > 0.5 nozzle size": {
 					improves: ["speed"],
-					affects: ["details","strength"]
+					affects: ["details", "strength"]
 				},
 				"best temp": {
 					improves: ["details", "overhangs"],
@@ -122,7 +123,7 @@
 				},
 				"best temp +5°": {
 					improves: ["strength"],
-					affects: ["details","overhangs"]
+					affects: ["details", "overhangs"]
 				},
 				"wall ordering outside to inside": {
 					improves: ["details"],
@@ -138,7 +139,7 @@
 				},
 				"< 3 walls": {
 					improves: ["speed"],
-					affects: ["strength","overhangs","details"]
+					affects: ["strength", "overhangs", "details"]
 				},
 				"> 15% infill": {
 					improves: ["strength", "details"],
@@ -146,7 +147,7 @@
 				},
 				"< 15% infill": {
 					improves: ["speed"],
-					affects: ["strength","details"]
+					affects: ["strength", "details"]
 				},
 			};
 			if (init) {
@@ -179,7 +180,8 @@
 			//refine recommendations
 			selected.forEach(o => {
 				Object.keys(setting).forEach(s => {
-					if (setting[s].improves.includes(o) && !recommend.includes(s)) recommend.push(s);
+					if (setting[s].improves.includes(o) && !recommend.includes(s)) recommend.push(
+						s);
 				})
 			});
 			// create output and warn about possible collisions
@@ -285,6 +287,16 @@
 		<h2>slicing impacts +</h2>
 		<div id="requirements"></div>
 		<div id="recommendations"></div>
+	</article>
+
+	<article>
+		<h2>g-code hotend pid tuning +</h2>
+		<ol>
+			<li>M106 S255 <i>fan 100%</i></li>
+			<li>M303 E0 S200 C8 U1 <i>@200°C, 8 cycles, save to ram</i></li>
+			<li>M500 <i>save to eeprom</i></li>
+			<li>M106 S0 <i>fan off</i></li>
+		</ol>
 	</article>
 
 	<script>
